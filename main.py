@@ -1,27 +1,40 @@
 from network import get_local_ip
 from scanner import scan_network
+from storage import load_devices, save_devices
+from inventory import update_inventory
+
 
 def main():
 
-    ip = get_local_ip()
-
-    print("Network Mapper")
-    print("\n--------------------------------------------------------------\n")
-    print(f"My IP: {ip}")
-
-
     network = "192.168.10.0/24"
 
+    # Scan the network
+    current_devices = scan_network(network)
 
-    print("\n scanning...\n")
+    # Load devices from previous scans
+    known_devices = load_devices()
 
-    devices = scan_network(network)
+    # Find devices that were not previously known
+    current_devices, new_devices = update_inventory(
+        current_devices,
+        known_devices
+    )
 
-    for device in devices:
-        print(device)
+    print("\nNew Devices:")
 
-    print("\nDevices found:", len(devices))
+    if new_devices:
+
+        for device in new_devices:
+            print(f"NEW DEVICE: {device}")
+
+    else:
+
+        print("No new devices found.")
+
+    # Save the current scan
+    save_devices(current_devices)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
+
