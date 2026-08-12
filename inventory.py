@@ -20,12 +20,34 @@ def update_inventory(current_devices, known_devices):
             device.first_seen = known_device.first_seen
             device.last_seen = now
             device.trusted = known_device.trusted
+            device.online = True
+
 
         else:
             device.first_seen = now
             device.last_seen = now
             device.trusted = False
+            device.online = True
+
+
             new_devices.append(device)
+
+    # Find previously known devices that were NOT
+    # found during the current scan
+
+    current_macs = set()
+
+    for device in current_devices:
+        current_macs.add(device.mac)
+
+
+    for device in known_devices:
+
+        if device.mac not in current_macs:
+
+            device.online = False
+
+            current_devices.append(device)
 
     
     return current_devices, new_devices

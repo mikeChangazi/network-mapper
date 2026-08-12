@@ -9,7 +9,7 @@ def save_devices(devices):
 
     for device in devices:
 
-        #create a dictionar of device objects
+        #create a dictionary of device objects
 
         device_data = {
 
@@ -18,7 +18,8 @@ def save_devices(devices):
                 "vendor": device.vendor,
                 "first_seen": device.first_seen,
                 "last_seen": device.last_seen,
-                "trusted": device.trusted
+                "trusted": device.trusted,
+                "online": device.online
 
                 }
 
@@ -57,7 +58,8 @@ def load_devices():
                 device_data["vendor"],
                 device_data.get("first_seen"),
                 device_data.get("last_seen"),
-                device_data.get("trusted")
+                device_data.get("trusted"),
+                device_data.get("online", False)
 
                 )
 

@@ -32,7 +32,4 @@ def get_local_network():
 
 
 if __name__=="__main__":
-    
-    network = get_local_network()
-
-    print("Local network: ", network)
+    main()

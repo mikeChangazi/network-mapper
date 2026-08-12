@@ -1,4 +1,3 @@
-from network import get_local_ip
 from network import get_local_network
 from scanner import scan_network
 from storage import load_devices, save_devices
