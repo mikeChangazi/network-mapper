@@ -23,17 +23,17 @@ class Device:
         return (
 
         f"Device("
-        f"ip : {self.ip},\n "
+        f"ip : {self.ip},"
 
-        f"mac : {self.mac},\n "
+        f"mac : {self.mac},"
 
-        f"vendor : {self.vendor}),\n"
+        f"vendor : {self.vendor}),"
 
-        f"first_seen: {self.first_seen},\n"
+        f"first_seen: {self.first_seen},"
 
-        f"last_seen: {self.last_seen},\n"
+        f"last_seen: {self.last_seen},"
 
-        f"trusted : {self.trusted}\n"
+        f"trusted : {self.trusted}"
 
         )
 

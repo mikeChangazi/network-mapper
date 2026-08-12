@@ -30,4 +30,16 @@ def update_inventory(current_devices, known_devices):
     
     return current_devices, new_devices
 
+def trust_device(devices, mac):
+
+    for device in devices:
+
+        if device.mac.lower() == mac.lower():
+
+            device.trusted = True
+
+            return True
+
+    return False
+
 
