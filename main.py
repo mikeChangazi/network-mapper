@@ -1,12 +1,11 @@
 from network import get_local_ip
+from network import get_local_network
 from scanner import scan_network
 from storage import load_devices, save_devices
 from inventory import update_inventory
 from inventory import trust_device
 
 import argparse
-
-NETWORK = "192.168.10.0/24"
 
 def parse_arguments():
 
@@ -57,12 +56,12 @@ def scan(network):
         known_devices
     )
 
-    print("\nNew Devices:")
+    print("\nNew Devices:\n")
 
     if new_devices:
 
         for device in new_devices:
-            print(f"NEW DEVICE: {device}")
+            print(f"new device: {device}")
 
     else:
 
@@ -122,7 +121,8 @@ def main():
     args = parse_arguments()
 
     if args.scan:
-        scan(NETWORK)
+        network = get_local_network()
+        scan(network)
     
 
     elif args.list:

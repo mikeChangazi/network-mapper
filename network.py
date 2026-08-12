@@ -1,17 +1,38 @@
 import socket
+import psutil
+import ipaddress
 
-def get_local_ip():
+#get interface details, ip, subnet from lcal device
+def get_local_network():
 
-    s = socket.socket(
-            socket.AF_INET,
-            socket.SOCK_DGRAM
-            )
 
-    try:
-        s.connect(("8.8.8.8", 80))
-        ip = s.getsockname()[0]
+    interfaces = psutil.net_if_addrs()
 
-    finally:
-        s.close()
+    for interface_name, addresses in interfaces.items():
 
-    return ip
+        for address in addresses:
+
+            if address.family.name == "AF_INET":
+
+                ip = address.address
+                netmask = address.netmask
+
+                if ip.startswith("127."):   #skip loopback address
+                    
+                    continue
+                
+                #determine the local network
+                network = ipaddress.ip_network(
+
+                        f"{ip}/{netmask}", strict=False
+
+                )
+
+                return str(network)
+
+
+if __name__=="__main__":
+    
+    network = get_local_network()
+
+    print("Local network: ", network)
