@@ -3,6 +3,7 @@ from scanner import scan_network
 from storage import load_devices, save_devices
 from inventory import update_inventory
 from inventory import trust_device
+from display import display_inventory
 
 import argparse
 
@@ -70,6 +71,7 @@ def scan(network):
     save_devices(current_devices)
 
 #load and list devices
+
 def list_devices():
 
     devices = load_devices()
@@ -82,8 +84,10 @@ def list_devices():
 
         return
 
-    for device in devices:
-        print(device)   
+    #for device in devices:
+    #   print(device)
+
+    display_inventory(devices)
 
 
     # Trust a device
