@@ -22,6 +22,12 @@ def update_inventory(current_devices, known_devices):
             device.trusted = known_device.trusted
             device.online = True
 
+            device.hostname = (
+
+                    device.hostname
+                    or known_device.hostname
+
+                    )
 
         else:
             device.first_seen = now
@@ -65,3 +71,15 @@ def trust_device(devices, mac):
     return False
 
 
+
+def untrust_device(devices, mac):
+
+    for device in devices:
+
+        if device.mac.lower() == mac.lower():
+
+            device.trusted = False
+
+            return True
+
+    return False

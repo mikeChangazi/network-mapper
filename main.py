@@ -1,8 +1,7 @@
 from network import get_local_network
 from scanner import scan_network
 from storage import load_devices, save_devices
-from inventory import update_inventory
-from inventory import trust_device
+from inventory import (update_inventory, trust_device, untrust_device)
 from display import display_inventory
 
 import argparse
@@ -19,14 +18,14 @@ def parse_arguments():
 
             "--scan",
             action = "store_true",
-            help = "Scan the network"
+            help = "Scan The Network"
                         )
 
     parser.add_argument(
 
             "--list",
             action = "store_true",
-            help = "Lst network devices"
+            help = "List Network Devices"
 
             )
 
@@ -35,7 +34,16 @@ def parse_arguments():
 
             "--trust",
             metavar = "MAC",
-            help = "Trust a network device by MAC"
+            help = "Trust a Network Device by MAC"
+
+            )
+
+    parser.add_argument(
+
+            "--untrust",
+            metavar = "MAC",
+            help = "Remove Device from Trusted List by MAC"
+
 
             )
 
@@ -60,8 +68,10 @@ def scan(network):
 
     if new_devices:
 
-        for device in new_devices:
-            print(f"new device: {device}")
+        print (f" New devices found {len(new_devices)}")
+
+        #for device in new_devices:
+         #   print(f"new device: {device}")
 
     else:
 
@@ -119,6 +129,32 @@ def trust(mac):
             )
 
 
+def untrust(mac):
+
+    devices = load_devices()
+
+    result = untrust_device(
+        devices,
+        mac
+    )
+
+    if result:
+
+        save_devices(devices)
+
+        print(
+            f"Device {mac} "
+            f"has been marked as untrusted."
+        )
+
+    else:
+
+        print(
+            f"Device {mac} "
+            f"was not found in inventory."
+        )
+
+
 def main():
 
     args = parse_arguments()
@@ -135,6 +171,10 @@ def main():
     elif args.trust:
 
         trust(args.trust)
+
+    elif args.untrust:
+
+        untrust(args.untrust)
 
     else:
 

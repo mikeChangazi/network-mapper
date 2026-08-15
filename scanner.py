@@ -2,6 +2,7 @@
 from scapy.all import ARP, Ether, srp
 from models.device import Device
 from vendor import get_vendor
+from network import get_hostname
 
 def scan_network(network):
 
@@ -41,13 +42,18 @@ def scan_network(network):
 
     )[0]
     
+    #creating device
+
     for sent, recieved in answered:
+
         vendor = get_vendor(recieved.hwsrc)
+        hostname = get_hostname(recieved.hwsrc)
 
         device = Device(
                 recieved.psrc,
                 recieved.hwsrc,
-                vendor
+                vendor,
+                hostname
 
                 )
 

@@ -31,5 +31,22 @@ def get_local_network():
                 return str(network)
 
 
+def get_hostname(ip):
+
+    try:
+        hostname = socket.gethostbyaddr(ip)[0]
+
+        return hostname
+
+    except socket.herror:
+
+        return None
+
+    except socket.gaierror:
+        return None
+
+
+
+
 if __name__=="__main__":
     main()

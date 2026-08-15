@@ -16,6 +16,7 @@ def save_devices(devices):
                 "ip": device.ip,
                 "mac": device.mac,
                 "vendor": device.vendor,
+                "hostname": device.hostname,
                 "first_seen": device.first_seen,
                 "last_seen": device.last_seen,
                 "trusted": device.trusted,
@@ -56,6 +57,7 @@ def load_devices():
                 device_data["ip"],
                 device_data["mac"],
                 device_data["vendor"],
+                device_data.get("hostname"),
                 device_data.get("first_seen"),
                 device_data.get("last_seen"),
                 device_data.get("trusted"),
@@ -70,24 +72,6 @@ def load_devices():
 
 
 if __name__ == '__main__':
-
-    device = Device(
-
-        "192.168.10.50",
-        "AA:BB:CC:11:22:33",
-        "Test Vendor",
-        "2026-08-09T15:00:00",
-        "2026-08-09T15:00:00",
-        False
-    )
-
-    save_devices([device])
-
-    devices = load_devices()
-
-    print("Loaded devices:")
-
-    for device in devices:
-        print(device)
+    main()
 
 

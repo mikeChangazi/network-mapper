@@ -8,23 +8,26 @@ def display_inventory(devices):
 
     print()
     print("NETWORK INVENTORY")
-    print("=" * 90)
+    print("=" * 110)
 
     print(
         f"{'IP':<16}"
+        f"{'HOSTNAME':<20}"
         f"{'MAC':<20}"
         f"{'VENDOR':<15}"
         f"{'STATUS':<20}"
-        f"{'TRUST':<20}"
+        f"{'TRUST':<10}"
     )
 
-    print("-" * 90)
+    print("-" * 110)
 
     online_count = 0
     offline_count = 0
     trusted_count = 0
 
     for device in devices:
+
+        hostname = device.hostname or "Unknown"
 
         # Status
         if device.online:
@@ -37,7 +40,6 @@ def display_inventory(devices):
             status = f"{RED}OFFLINE{RESET}"
             offline_count += 1
 
-
         # Trust
         if device.trusted:
 
@@ -48,17 +50,16 @@ def display_inventory(devices):
 
             trust = f"{YELLOW}UNTRUSTED{RESET}"
 
-
         print(
             f"{device.ip:<16}"
+            f"{hostname:<20}"
             f"{device.mac:<20}"
             f"{device.vendor:<15}"
-            f"{status:<29}"
+            f"{status:<20}"
             f"{trust}"
         )
 
-
-    print("=" * 90)
+    print("=" * 110)
 
     print(
         f"\nTotal: {len(devices)}    "
